@@ -1,12 +1,13 @@
 const express = require('express');
+
 const app = express();
 
-app.set("view engine", "ejs");
-app.use(express.static('public'))
+const Board = require('./app/models/board');
 
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 const board = new Board();
-
 
 const returnGameData = (res) => {
   const data = {
@@ -17,10 +18,6 @@ const returnGameData = (res) => {
   res.send(JSON.stringify(data));
 };
 
-app.get('/', function (req, res) {
-  res.render("home/index")
-});
-
 app.get('/', (req, res) => {
   res.render('home/index');
 });
@@ -30,7 +27,16 @@ app.get('/game_data', (req, res) => {
   returnGameData(res);
 });
 
+app.put('/cell/:id', (req, res) => {
+  const { id } = req.params;
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  if (!board.gameOver) {
+    board.revealDiamond(id);
+  }
+
+  returnGameData(res);
+});
+
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!'); /* eslint-disable-line no-console */
 });
