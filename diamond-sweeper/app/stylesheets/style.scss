@@ -1,21 +1,48 @@
-table.diamondsweeper-board {
-  td {
-    padding: 0;
-    border: 1px solid black;
-  }
+// table.diamondsweeper-board {
+//   td {
+//     padding: 0;
+//     border: 1px solid black;
+//   }
+// }
+.diamondsweeper-board {
+  display: grid;
+  grid-template-rows: repeat(8, 1fr);
+  grid-gap: 2px;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.cell-wrapper {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  border: 1px solid black;
+  padding: 0;
 }
 
 .cell {
   height: 50px;
   width: 50px;
   background-size: 50px 50px;
+  cursor: pointer;
 
   &.diamond {
     background-image: url(diamond.png);
   }
 
-  &.arrow {
-    background-image: url(arrow.png);
+  &.arrow-left {
+    background-image: url(arrow-left.png);
+  }
+
+  &.arrow-right {
+    background-image: url(arrow-right.png);
+  }
+
+  &.arrow-up {
+    background-image: url(arrow-up.png);
+  }
+
+  &.arrow-down {
+    background-image: url(arrow-down.png);
   }
 
   &.unknown {
