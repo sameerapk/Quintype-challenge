@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { getGameData, revealCell } from 'Api';
 import Cell from 'Cell';
 
+//creating a board component to render the the state and display it to the UI
 class Board extends Component {
   state = {
     cells: [],
     gameOver: false,
     score: 0,
   }
-
+//to fetch the data from local storage
   componentDidMount() {
     const gameData = localStorage.getItem('gameData');
 
@@ -22,7 +23,7 @@ class Board extends Component {
       });
     }
   }
-
+//to perform the functionality when the user clicks on a certain block in the 8X8 matrix
   handleClick = (event) => {
     if (this.state.gameOver) return;
 

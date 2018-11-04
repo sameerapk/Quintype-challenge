@@ -1,5 +1,7 @@
 const Cell = require('./cell');
 
+
+//creating the voard class to implement all the functionalities of the board
 class Board {
   constructor() {
     this.cells = this._initializeCells();
@@ -14,6 +16,8 @@ class Board {
     this._addDiamonds();
   }
 
+
+//to initialize the cells of the 8X8 board
   _initializeCells() {
     const cells = [];
     let cellId = 0;
@@ -27,22 +31,26 @@ class Board {
     return cells;
   }
 
+//to fetch the coordinates of a particular cell in the board
   _getCell(xIndex, yIndex) {
     return this.cells[xIndex][yIndex];
   }
 
+//to provide a starter for the hints
   _clearHints() {
     if (this._cellWithHint !== '') {
       this._cellWithHint.clearHint();
     }
   }
 
+//to calculate the probability of the distance between the x and y cordinates of the board
   _findDistance(xIndex1, yIndex1, xIndex2, yIndex2) {
     const xDiff = (xIndex1 - xIndex2) ** 2;
     const yDiff = (yIndex1 - yIndex2) ** 2;
     return ((xDiff + yDiff) ** 0.5);
   }
 
+//finding the nearest diamond using the _findDistance function
   _findNearestDiamond(cell, xIndex, yIndex) {
     let minX = 0;
     let minY = 0;
@@ -60,6 +68,8 @@ class Board {
     return { nearestXIndex: minX, nearestYIndex: minY };
   }
 
+
+//to find the nearest diamond when the user is not able to find out where the diamond is by using the hints
   _findNearestDiamondDirection(cell) {
     const { xIndex, yIndex } = this._findCoordinatesForId(cell.id);
     const { nearestXIndex, nearestYIndex } = this._findNearestDiamond(cell, xIndex, yIndex);
@@ -98,6 +108,7 @@ class Board {
     return 'down';
   }
 
+//if the user is not able to click the cell with diamond then we need to give him some hints
   _updateHint(cell) {
     this._clearHints();
     const direction = this._findNearestDiamondDirection(cell);
@@ -106,6 +117,7 @@ class Board {
     this._cellWithHint = cell;
   }
 
+//to indicate the presence of the diamond in the cell
   revealDiamond(id) {
     const cell = this._findCell(id);
     const diamondFound = cell.reveal();
@@ -121,10 +133,12 @@ class Board {
     }
   }
 
+//to generate random cordinate sto place the diamonds
   _findCoordinatesForId(id) {
     return { xIndex: parseInt(id / 8, 10), yIndex: id % 8 };
   }
 
+//to get the corresponding cell which the user clicks
   _findCell(id) {
     const { xIndex, yIndex } = this._findCoordinatesForId(id);
 
@@ -132,6 +146,7 @@ class Board {
     return this._getCell(xIndex, yIndex);
   }
 
+//to generate random values in the 8X8 board
   _getRandomCoordinates() {
     return ({
       xIndex: Math.floor(Math.random() * 8),
@@ -139,6 +154,7 @@ class Board {
     });
   }
 
+//to add the 8 diamonds randomly in any of the 64 blocks
   _addDiamonds() {
     let diamondCount = 0;
     while (diamondCount < 8) {

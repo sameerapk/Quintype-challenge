@@ -18,6 +18,7 @@ const returnGameData = (res) => {
   res.send(JSON.stringify(data));
 };
 
+//to launch the url localhost:3000
 app.get('/', (req, res) => {
   res.render('home/index');
 });
